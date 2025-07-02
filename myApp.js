@@ -7,38 +7,6 @@ app.get('/', (req, res) => {
     // Send a response to the client
     res.sendFile(path.join(__dirname + "/views/index.html"));
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- module.exports = app;
+// Serve static files from the "public" directory
+app.use('/public', express.static(path.join(__dirname , 'public')));
+module.exports = app;
