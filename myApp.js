@@ -1,8 +1,12 @@
 let express = require('express');
 const path = require('path');
 require('dotenv').config();
+const bodyParser = require('body-parser'); // Import body-parser to parse request bodies
 
 let app = express();
+app.use(bodyParser.urlencoded({ extended: false })); // Use body-parser middleware
+app.use(bodyParser.json()); // Use body-parser middleware
+
 // Build a simple logger middleware
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.path} - ${req.ip}`); // Log the request method, path, and IP address
@@ -40,4 +44,15 @@ app.get('/:word/echo', (req, res) => {
     const { word } = req.params; // Extract the word from the request parameters
     res.json({ echo: word }); // Return the word in a JSON object
 });
+
+// Receive a POST request at /name and respond with a JSON object containing the first and last name
+app.route('/name', express.urlencoded({ extended: false }))
+    .get((req, res) => {
+        const { first: firstName, last: lastName } = req.query; // Extract first and last name from the query parameters
+        res.json({ name: `${firstName} ${lastName}` }); // Return the full name in a JSON object
+    })
+    .post((req, res) => {
+        const { first: firstName, last: lastName } = req.body; // Extract first and last name from the request body
+        res.json({ name: `${firstName} ${lastName}` }); // Return the full name in a JSON object
+ });
 module.exports = app;
