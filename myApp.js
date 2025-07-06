@@ -28,4 +28,16 @@ app.get('/json', (req, res) => {
         res.json({ message: "Hello json" }); // Return a JSON object
     }
 });
+// Middleware to create a Time Server
+app.get('/now', (req, res, next) => {
+    req.time = new Date().toString(); // Add a time property to the request object
+    next(); // Call the next middleware in the stack
+}, (req, res) => {
+    res.json({ time: req.time }); // Return the time in a JSON object
+});
+// Build a route to echo the request parameters
+app.get('/:word/echo', (req, res) => {
+    const { word } = req.params; // Extract the word from the request parameters
+    res.json({ echo: word }); // Return the word in a JSON object
+});
 module.exports = app;
