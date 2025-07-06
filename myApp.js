@@ -46,7 +46,7 @@ app.get('/:word/echo', (req, res) => {
 });
 
 // Receive a POST request at /name and respond with a JSON object containing the first and last name
-app.route('/name', express.urlencoded({ extended: false }))
+app.route('/name')
     .get((req, res) => {
         const { first: firstName, last: lastName } = req.query; // Extract first and last name from the query parameters
         res.json({ name: `${firstName} ${lastName}` }); // Return the full name in a JSON object
